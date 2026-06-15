@@ -1,0 +1,562 @@
+<!DOCTYPE html>
+<html lang="en-GB">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Corbett Studio — Bright, friendly websites for small businesses</title>
+  <meta name="description" content="Corbett Studio designs and builds bright, friendly, fast websites for small businesses and new companies. Based in Newcastle, working everywhere." />
+
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,600;12..96,700;12..96,800&family=DM+Sans:wght@400;500;700&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet" />
+
+  <style>
+    :root {
+      --paper:  #fffdf6;
+      --paper-2:#fff8ea;
+      --ink:    #17120e;
+      --ink-2:  #4f463d;
+
+      --coral:  #ff5a36;
+      --yellow: #ffc93c;
+      --indigo: #3f2ce6;
+      --mint:   #12c7a0;
+      --pink:   #ff7ab6;
+
+      --maxw: 1140px;
+      --font-display: 'Bricolage Grotesque', system-ui, sans-serif;
+      --font-body: 'DM Sans', system-ui, sans-serif;
+      --font-mono: 'Space Mono', ui-monospace, monospace;
+      --ease: cubic-bezier(0.22, 1, 0.36, 1);
+      --bounce: cubic-bezier(0.34, 1.56, 0.64, 1);
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+    body {
+      background: var(--paper);
+      color: var(--ink);
+      font-family: var(--font-body);
+      line-height: 1.6;
+      -webkit-font-smoothing: antialiased;
+      overflow-x: hidden;
+    }
+    a { color: inherit; text-decoration: none; }
+    img { max-width: 100%; display: block; }
+
+    .wrap { width: 100%; max-width: var(--maxw); margin-inline: auto; padding-inline: 24px; }
+
+    /* ---- Type ---- */
+    h1, h2, h3 { font-family: var(--font-display); font-weight: 800; line-height: 1.02; letter-spacing: -0.02em; }
+    .mono { font-family: var(--font-mono); font-size: 0.74rem; letter-spacing: 0.04em; text-transform: uppercase; }
+
+    .eyebrow {
+      display: inline-block;
+      font-family: var(--font-mono);
+      font-size: 0.72rem;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: var(--coral);
+      background: var(--paper-2);
+      border: 2px solid var(--ink);
+      padding: 6px 14px;
+      border-radius: 100px;
+      box-shadow: 3px 3px 0 var(--ink);
+    }
+
+    /* Highlighter signature */
+    .hl { position: relative; white-space: nowrap; }
+    .hl::before {
+      content: "";
+      position: absolute;
+      left: -4px; right: -4px; bottom: 4%;
+      height: 46%;
+      background: var(--yellow);
+      z-index: -1;
+      transform: skewX(-6deg) scaleX(0);
+      transform-origin: left center;
+      transition: transform 0.7s var(--ease) 0.3s;
+    }
+    .hl.c2::before { background: var(--mint); }
+    .hl.c3::before { background: var(--pink); }
+    .reveal.in .hl::before, .hero .hl::before { transform: skewX(-6deg) scaleX(1); }
+
+    /* ---- Buttons ---- */
+    .btn {
+      display: inline-flex; align-items: center; gap: 10px;
+      font-family: var(--font-display); font-weight: 700; font-size: 0.98rem;
+      padding: 14px 26px;
+      border-radius: 100px;
+      border: 2px solid var(--ink);
+      cursor: pointer;
+      transition: transform 0.25s var(--bounce), box-shadow 0.25s var(--ease);
+      box-shadow: 4px 4px 0 var(--ink);
+    }
+    .btn:hover { transform: translate(-2px,-2px); box-shadow: 6px 6px 0 var(--ink); }
+    .btn:active { transform: translate(2px,2px); box-shadow: 1px 1px 0 var(--ink); }
+    .btn-coral { background: var(--coral); color: #fff; }
+    .btn-ink   { background: var(--ink); color: var(--paper); }
+    .btn-white { background: var(--paper); color: var(--ink); }
+    .btn-arrow svg { transition: transform 0.25s var(--ease); }
+    .btn:hover .btn-arrow svg { transform: translateX(4px); }
+
+    /* ---- Nav ---- */
+    header {
+      position: sticky; top: 0; z-index: 100;
+      background: rgba(255,253,246,0.85);
+      backdrop-filter: blur(10px);
+      border-bottom: 2px solid var(--ink);
+    }
+    .nav { display: flex; align-items: center; justify-content: space-between; height: 70px; }
+    .logo { display: flex; align-items: center; gap: 10px; font-family: var(--font-display); font-weight: 800; font-size: 1.15rem; letter-spacing: -0.02em; }
+    .logo .dot { width: 14px; height: 14px; background: var(--coral); border: 2px solid var(--ink); border-radius: 50%; transition: transform 0.4s var(--bounce), background 0.4s; }
+    .logo:hover .dot { transform: rotate(120deg) scale(1.15); background: var(--mint); }
+    .nav-links { display: flex; align-items: center; gap: 30px; }
+    .nav-links a:not(.btn) { font-weight: 500; font-size: 0.95rem; transition: color 0.2s; }
+    .nav-links a:not(.btn):hover { color: var(--coral); }
+    .nav .btn { padding: 10px 20px; font-size: 0.9rem; box-shadow: 3px 3px 0 var(--ink); }
+
+    .nav-toggle { display: none; flex-direction: column; gap: 5px; background: none; border: 0; cursor: pointer; padding: 8px; }
+    .nav-toggle span { width: 26px; height: 2.5px; background: var(--ink); border-radius: 2px; transition: 0.3s var(--ease); }
+
+    /* ---- Section base ---- */
+    .section { padding: clamp(70px, 10vw, 120px) 0; }
+    .head { max-width: 640px; }
+    .head h2 { font-size: clamp(2.1rem, 5.5vw, 3.6rem); margin: 18px 0 0; }
+    .head p { color: var(--ink-2); font-size: 1.1rem; margin-top: 16px; }
+
+    /* ---- Hero ---- */
+    .hero { padding: clamp(50px, 8vw, 90px) 0 clamp(40px,6vw,70px); position: relative; }
+    .hero .shape { position: absolute; border: 2px solid var(--ink); z-index: 0; }
+    .hero .s1 { width: 90px; height: 90px; background: var(--yellow); border-radius: 50%; top: 8%; right: 6%; animation: float 6s ease-in-out infinite; }
+    .hero .s2 { width: 60px; height: 60px; background: var(--indigo); top: 42%; right: 14%; transform: rotate(12deg); animation: float 7s ease-in-out infinite reverse; }
+    .hero .s3 { width: 46px; height: 46px; background: var(--mint); border-radius: 50%; bottom: 14%; left: 4%; animation: float 5.5s ease-in-out infinite; }
+    @keyframes float { 0%,100%{ transform: translateY(0) rotate(var(--r,0)); } 50%{ transform: translateY(-16px) rotate(var(--r,0)); } }
+
+    .hero-inner { position: relative; z-index: 2; max-width: 860px; }
+    .status { display: inline-flex; align-items: center; gap: 9px; font-family: var(--font-mono); font-size: 0.78rem; background: var(--mint); color: var(--ink); border: 2px solid var(--ink); padding: 7px 16px; border-radius: 100px; box-shadow: 3px 3px 0 var(--ink); margin-bottom: 26px; }
+    .status .pulse { width: 9px; height: 9px; background: var(--ink); border-radius: 50%; animation: pulse 1.6s infinite; }
+    @keyframes pulse { 0%,100%{ opacity: 1; } 50%{ opacity: 0.25; } }
+
+    .hero h1 { font-size: clamp(2.6rem, 8vw, 5.4rem); margin-bottom: 26px; }
+    .hero p { font-size: clamp(1.05rem, 2vw, 1.35rem); color: var(--ink-2); max-width: 560px; margin-bottom: 36px; }
+    .hero-cta { display: flex; gap: 16px; flex-wrap: wrap; }
+
+    /* Marquee */
+    .marquee { margin-top: clamp(40px,6vw,64px); border-block: 2px solid var(--ink); background: var(--indigo); color: var(--paper); overflow: hidden; }
+    .marquee-track { display: flex; gap: 0; width: max-content; animation: scroll 22s linear infinite; }
+    .marquee-track span { font-family: var(--font-display); font-weight: 700; font-size: 1.1rem; padding: 16px 28px; display: inline-flex; align-items: center; gap: 28px; white-space: nowrap; }
+    .marquee-track span::after { content: "✦"; color: var(--yellow); }
+    @keyframes scroll { to { transform: translateX(-50%); } }
+
+    /* ---- Services ---- */
+    .svc-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 22px; margin-top: 50px; }
+    .svc {
+      background: var(--paper); border: 2px solid var(--ink); border-radius: 20px;
+      padding: 34px; box-shadow: 6px 6px 0 var(--ink);
+      transition: transform 0.3s var(--ease), box-shadow 0.3s var(--ease);
+    }
+    .svc:hover { transform: translate(-3px,-3px) rotate(-0.6deg); box-shadow: 9px 9px 0 var(--ink); }
+    .svc .ic { width: 56px; height: 56px; border: 2px solid var(--ink); border-radius: 14px; display: grid; place-items: center; margin-bottom: 20px; }
+    .svc:nth-child(1) .ic { background: var(--coral); }
+    .svc:nth-child(2) .ic { background: var(--yellow); }
+    .svc:nth-child(3) .ic { background: var(--mint); }
+    .svc:nth-child(4) .ic { background: var(--pink); }
+    .svc .ic svg { width: 28px; height: 28px; stroke: var(--ink); }
+    .svc h3 { font-size: 1.4rem; margin-bottom: 10px; }
+    .svc p { color: var(--ink-2); }
+
+    /* ---- Work ---- */
+    .work { background: var(--ink); color: var(--paper); border-block: 2px solid var(--ink); }
+    .work .head h2, .work .head p { color: var(--paper); }
+    .work .head p { opacity: 0.75; }
+    .work .eyebrow { background: var(--ink); color: var(--yellow); border-color: var(--yellow); box-shadow: 3px 3px 0 var(--yellow); }
+
+    .case {
+      margin-top: 50px; background: var(--paper); color: var(--ink);
+      border: 2px solid var(--ink); border-radius: 24px; overflow: hidden;
+      display: grid; grid-template-columns: 1.05fr 0.95fr; box-shadow: 10px 10px 0 var(--coral);
+    }
+    .case-media { background: #0a0a0a; padding: 44px; display: flex; flex-direction: column; justify-content: center; gap: 18px; min-height: 320px; }
+    .case-media .badge { font-family: var(--font-mono); font-size: 0.72rem; letter-spacing: 0.14em; text-transform: uppercase; color: #c8a24a; }
+    .case-media .mock-name { font-family: 'Bricolage Grotesque', sans-serif; font-weight: 300; font-size: 2.4rem; letter-spacing: 0.18em; color: #f4f3ef; text-transform: uppercase; }
+    .case-media .mock-sub { letter-spacing: 0.4em; font-size: 0.7rem; text-transform: uppercase; color: #c8a24a; border-block: 1px solid rgba(200,162,74,0.4); padding: 8px 0; text-align: center; }
+    .case-media .roof { width: 64px; height: 30px; }
+    .case-media .roof path { fill: none; stroke: #c8a24a; stroke-width: 2; }
+    .case-body { padding: 44px; display: flex; flex-direction: column; gap: 16px; }
+    .case-body .tag-row { display: flex; gap: 8px; flex-wrap: wrap; }
+    .case-body .tag { font-family: var(--font-mono); font-size: 0.68rem; text-transform: uppercase; letter-spacing: 0.08em; border: 1.5px solid var(--ink); border-radius: 100px; padding: 4px 12px; }
+    .case-body h3 { font-size: 1.9rem; }
+    .case-body p { color: var(--ink-2); }
+    .case-body .btn { align-self: flex-start; margin-top: 6px; }
+
+    .work-note { margin-top: 26px; text-align: center; font-family: var(--font-mono); font-size: 0.8rem; color: var(--paper); opacity: 0.7; }
+
+    /* ---- Process ---- */
+    .steps { display: grid; grid-template-columns: repeat(4, 1fr); gap: 18px; margin-top: 50px; }
+    .pstep { border: 2px solid var(--ink); border-radius: 18px; padding: 28px 24px; background: var(--paper-2); }
+    .pstep .num { font-family: var(--font-display); font-weight: 800; font-size: 2.4rem; -webkit-text-stroke: 2px var(--ink); color: transparent; line-height: 1; margin-bottom: 14px; }
+    .pstep:nth-child(1) .num { color: var(--coral); -webkit-text-stroke: 0; }
+    .pstep:nth-child(2) .num { color: var(--yellow); -webkit-text-stroke: 1px var(--ink); }
+    .pstep:nth-child(3) .num { color: var(--mint); -webkit-text-stroke: 0; }
+    .pstep:nth-child(4) .num { color: var(--indigo); -webkit-text-stroke: 0; }
+    .pstep h3 { font-size: 1.2rem; margin-bottom: 8px; }
+    .pstep p { color: var(--ink-2); font-size: 0.94rem; }
+
+    /* ---- Packages ---- */
+    .pack-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 22px; margin-top: 50px; }
+    .pack { border: 2px solid var(--ink); border-radius: 22px; padding: 34px 30px; background: var(--paper); box-shadow: 6px 6px 0 var(--ink); display: flex; flex-direction: column; }
+    .pack.featured { background: var(--yellow); transform: translateY(-8px); }
+    .pack .pname { font-family: var(--font-mono); text-transform: uppercase; letter-spacing: 0.1em; font-size: 0.78rem; }
+    .pack .price { font-family: var(--font-display); font-weight: 800; font-size: 2.4rem; margin: 8px 0 4px; }
+    .pack .price small { font-family: var(--font-body); font-weight: 400; font-size: 0.9rem; color: var(--ink-2); }
+    .pack ul { list-style: none; margin: 20px 0 26px; display: grid; gap: 12px; }
+    .pack li { display: flex; gap: 10px; font-size: 0.95rem; }
+    .pack li::before { content: "✓"; font-weight: 700; color: var(--coral); }
+    .pack.featured li::before { color: var(--ink); }
+    .pack .btn { margin-top: auto; justify-content: center; }
+
+    /* ---- About ---- */
+    .about-grid { display: grid; grid-template-columns: 0.9fr 1.1fr; gap: 56px; align-items: center; }
+    .about-card { background: var(--indigo); color: var(--paper); border: 2px solid var(--ink); border-radius: 24px; padding: 44px; box-shadow: 10px 10px 0 var(--ink); }
+    .about-card .emoji { font-size: 2.6rem; margin-bottom: 16px; }
+    .about-card h3 { font-size: 1.6rem; margin-bottom: 12px; }
+    .about-text h2 { font-size: clamp(2rem, 5vw, 3.2rem); }
+    .about-text p { color: var(--ink-2); font-size: 1.08rem; margin-top: 18px; }
+
+    /* ---- Contact / CTA ---- */
+    .cta { background: var(--coral); border-block: 2px solid var(--ink); color: #fff; }
+    .cta-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 56px; align-items: start; }
+    .cta h2 { font-size: clamp(2.2rem, 6vw, 4rem); color: #fff; }
+    .cta .lede { font-size: 1.15rem; margin: 18px 0 28px; }
+    .cta-detail { display: flex; align-items: center; gap: 12px; margin-top: 14px; font-family: var(--font-mono); font-size: 0.92rem; }
+    .cta-detail .ci { width: 38px; height: 38px; border: 2px solid #fff; border-radius: 10px; display: grid; place-items: center; flex: none; }
+
+    .cform { background: var(--paper); color: var(--ink); border: 2px solid var(--ink); border-radius: 24px; padding: 34px; box-shadow: 8px 8px 0 var(--ink); }
+    form { display: grid; gap: 16px; }
+    .frow { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+    label { font-family: var(--font-mono); font-size: 0.72rem; letter-spacing: 0.08em; text-transform: uppercase; display: block; margin-bottom: 6px; }
+    input, textarea, select {
+      width: 100%; font-family: var(--font-body); font-size: 1rem;
+      padding: 12px 14px; border: 2px solid var(--ink); border-radius: 12px; background: #fff; color: var(--ink);
+      transition: box-shadow 0.2s var(--ease);
+    }
+    input:focus, textarea:focus, select:focus { outline: none; box-shadow: 3px 3px 0 var(--coral); }
+    textarea { resize: vertical; min-height: 110px; }
+    .cform .btn { width: 100%; justify-content: center; }
+    .fstatus { font-family: var(--font-mono); font-size: 0.82rem; min-height: 1.1em; color: var(--ink); }
+
+    /* ---- Footer ---- */
+    footer { background: var(--ink); color: var(--paper); padding: 56px 0 30px; }
+    .foot-top { display: flex; justify-content: space-between; gap: 40px; flex-wrap: wrap; }
+    .foot-brand { max-width: 320px; }
+    .foot-brand .logo { color: var(--paper); margin-bottom: 14px; }
+    .foot-brand p { opacity: 0.7; font-size: 0.92rem; }
+    .foot-links { display: flex; gap: 60px; flex-wrap: wrap; }
+    .foot-col h5 { font-family: var(--font-mono); font-size: 0.72rem; letter-spacing: 0.14em; text-transform: uppercase; color: var(--yellow); margin-bottom: 14px; }
+    .foot-col a { display: block; opacity: 0.78; font-size: 0.92rem; margin-bottom: 9px; transition: opacity 0.2s; }
+    .foot-col a:hover { opacity: 1; }
+    .foot-bottom { margin-top: 44px; padding-top: 22px; border-top: 1px solid rgba(255,255,255,0.15); display: flex; justify-content: space-between; gap: 14px; flex-wrap: wrap; font-size: 0.82rem; opacity: 0.6; }
+
+    /* ---- Reveal ---- */
+    .reveal { opacity: 0; transform: translateY(24px); transition: opacity 0.7s var(--ease), transform 0.7s var(--ease); }
+    .reveal.in { opacity: 1; transform: none; }
+
+    /* ---- Responsive ---- */
+    @media (max-width: 860px) {
+      .nav-links { display: none; }
+      .nav-toggle { display: flex; }
+      .nav-links.open { display: flex; flex-direction: column; align-items: flex-start; gap: 22px; position: absolute; top: 70px; left: 0; right: 0; background: var(--paper); border-bottom: 2px solid var(--ink); padding: 26px 24px; }
+      .svc-grid, .steps, .pack-grid, .about-grid, .cta-grid, .case { grid-template-columns: 1fr; }
+      .case { box-shadow: 8px 8px 0 var(--coral); }
+      .pack.featured { transform: none; }
+      .hero .shape { display: none; }
+    }
+    @media (max-width: 520px) {
+      .frow { grid-template-columns: 1fr; }
+      .svc, .about-card, .cform { padding: 26px; }
+    }
+    @media (prefers-reduced-motion: reduce) {
+      *, *::before { animation: none !important; scroll-behavior: auto !important; }
+      .reveal { opacity: 1; transform: none; transition: none; }
+      .hl::before { transform: skewX(-6deg) scaleX(1) !important; }
+    }
+    :focus-visible { outline: 3px solid var(--indigo); outline-offset: 2px; }
+  </style>
+</head>
+<body>
+
+  <!-- ===== NAV ===== -->
+  <header>
+    <div class="wrap nav">
+      <a class="logo" href="#top"><span class="dot"></span>Corbett Studio</a>
+      <nav class="nav-links" id="navLinks">
+        <a href="#services">Services</a>
+        <a href="#work">Work</a>
+        <a href="#process">Process</a>
+        <a href="#pricing">Pricing</a>
+        <a class="btn btn-coral" href="#contact">Start a project</a>
+      </nav>
+      <button class="nav-toggle" id="navToggle" aria-label="Open menu" aria-expanded="false">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+  </header>
+
+  <!-- ===== HERO ===== -->
+  <section class="hero" id="top">
+    <span class="shape s1"></span><span class="shape s2"></span><span class="shape s3"></span>
+    <div class="wrap hero-inner">
+      <span class="status"><span class="pulse"></span>Available for new projects</span>
+      <h1>Bright, friendly websites that make small businesses look <span class="hl">brilliant</span>.</h1>
+      <p>I design and build fast, modern sites for local businesses and new companies — and I get them live, hosted, and looking great on every screen.</p>
+      <div class="hero-cta">
+        <a class="btn btn-coral" href="#contact">Start a project <span class="btn-arrow"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span></a>
+        <a class="btn btn-white" href="#work">See my work</a>
+      </div>
+    </div>
+    <div class="marquee" aria-hidden="true">
+      <div class="marquee-track">
+        <span>Web Design</span><span>Custom Builds</span><span>Hosting &amp; Launch</span><span>Mobile-Friendly</span><span>Fast &amp; Modern</span><span>Local Businesses</span>
+        <span>Web Design</span><span>Custom Builds</span><span>Hosting &amp; Launch</span><span>Mobile-Friendly</span><span>Fast &amp; Modern</span><span>Local Businesses</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== SERVICES ===== -->
+  <section class="section" id="services">
+    <div class="wrap">
+      <div class="head reveal">
+        <span class="eyebrow">What I do</span>
+        <h2>Everything you need to get <span class="hl c2">online</span>.</h2>
+        <p>From a blank page to a polished, live website — handled end to end, so you don't have to touch a line of code.</p>
+      </div>
+      <div class="svc-grid">
+        <div class="svc reveal">
+          <div class="ic"><svg viewBox="0 0 24 24" fill="none" stroke-width="2"><rect x="3" y="4" width="18" height="14" rx="2"/><path d="M3 9h18M8 21h8"/></svg></div>
+          <h3>Website design</h3>
+          <p>A look that's made for your business — clean, distinctive, and built around what you want visitors to do.</p>
+        </div>
+        <div class="svc reveal">
+          <div class="ic"><svg viewBox="0 0 24 24" fill="none" stroke-width="2"><path d="m8 6-6 6 6 6M16 6l6 6-6 6"/></svg></div>
+          <h3>Custom builds</h3>
+          <p>Hand-coded, fast-loading sites — no bloated templates. Just the features you actually need.</p>
+        </div>
+        <div class="svc reveal">
+          <div class="ic"><svg viewBox="0 0 24 24" fill="none" stroke-width="2"><path d="M12 3v12m0 0 4-4m-4 4-4-4M4 17v2a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-2"/></svg></div>
+          <h3>Hosting &amp; launch</h3>
+          <p>I get you live with reliable, low-cost hosting and a proper domain — and walk you through how it works.</p>
+        </div>
+        <div class="svc reveal">
+          <div class="ic"><svg viewBox="0 0 24 24" fill="none" stroke-width="2"><path d="M3 12a9 9 0 1 0 18 0 9 9 0 0 0-18 0Z"/><path d="M12 7v5l3 2"/></svg></div>
+          <h3>Updates &amp; care</h3>
+          <p>Need a change down the line? New text, photos or pages are quick and easy to sort.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== WORK ===== -->
+  <section class="section work" id="work">
+    <div class="wrap">
+      <div class="head reveal">
+        <span class="eyebrow">Selected work</span>
+        <h2>Recently launched.</h2>
+        <p>Real sites, live on the internet, doing a job for real businesses.</p>
+      </div>
+
+      <div class="case reveal">
+        <div class="case-media">
+          <svg class="roof" viewBox="0 0 64 30" aria-hidden="true"><path d="M2 28 L24 6 L28 12 L32 6 L62 28"/></svg>
+          <div class="mock-name">Curry</div>
+          <div class="mock-sub">Property Solutions Ltd</div>
+        </div>
+        <div class="case-body">
+          <div class="tag-row">
+            <span class="tag">Property</span><span class="tag">Brand-led</span><span class="tag">GitHub Pages</span>
+          </div>
+          <h3>Curry Property Solutions Ltd</h3>
+          <p>A sleek black-and-gold site for a new rent-to-rent property company — built to win landlord enquiries, with a guaranteed-rent pitch, an enquiry form, and a design that runs from their logo through every section.</p>
+          <a class="btn btn-ink" href="https://lcorbett419.github.io/CurryProperties/" target="_blank" rel="noopener">Visit live site <span class="btn-arrow"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M7 17 17 7M9 7h8v8"/></svg></span></a>
+        </div>
+      </div>
+
+      <p class="work-note">More projects landing soon — your business could be the next one here.</p>
+    </div>
+  </section>
+
+  <!-- ===== PROCESS ===== -->
+  <section class="section" id="process">
+    <div class="wrap">
+      <div class="head reveal">
+        <span class="eyebrow">How it works</span>
+        <h2>Simple, start to <span class="hl c3">finish</span>.</h2>
+        <p>No jargon, no faff. Here's how we'll go from idea to a website that's live.</p>
+      </div>
+      <div class="steps">
+        <div class="pstep reveal"><div class="num">01</div><h3>Chat</h3><p>Tell me about your business and what you'd like. A quick, no-pressure conversation.</p></div>
+        <div class="pstep reveal"><div class="num">02</div><h3>Design</h3><p>I put together a look and layout for you to react to, and we tweak it until it's right.</p></div>
+        <div class="pstep reveal"><div class="num">03</div><h3>Build</h3><p>I build the full site — fast, responsive, and working beautifully on phones and laptops.</p></div>
+        <div class="pstep reveal"><div class="num">04</div><h3>Launch</h3><p>We get it live on your domain, and I show you the ropes. You're online and good to go.</p></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== PRICING ===== -->
+  <section class="section" id="pricing" style="background:var(--paper-2);border-block:2px solid var(--ink);">
+    <div class="wrap">
+      <div class="head reveal">
+        <span class="eyebrow">Pricing</span>
+        <h2>Straightforward packages.</h2>
+        <p>Clear pricing with no surprises. Need something different? Just ask — these are a starting point.</p>
+      </div>
+      <div class="pack-grid">
+        <div class="pack reveal">
+          <span class="pname">Starter</span>
+          <div class="price">£___<small> one-off</small></div>
+          <p style="color:var(--ink-2);font-size:0.92rem;">Perfect for getting a new business online.</p>
+          <ul>
+            <li>One-page website</li>
+            <li>Mobile-friendly design</li>
+            <li>Contact form</li>
+            <li>Launched on your domain</li>
+          </ul>
+          <a class="btn btn-white" href="#contact">Enquire</a>
+        </div>
+        <div class="pack featured reveal">
+          <span class="pname">Business ★</span>
+          <div class="price">£___<small> one-off</small></div>
+          <p style="color:var(--ink-2);font-size:0.92rem;">For businesses that need a bit more room.</p>
+          <ul>
+            <li>Up to 5 pages</li>
+            <li>Custom design &amp; branding</li>
+            <li>Enquiry / booking form</li>
+            <li>Hosting &amp; launch sorted</li>
+          </ul>
+          <a class="btn btn-ink" href="#contact">Enquire</a>
+        </div>
+        <div class="pack reveal">
+          <span class="pname">Care plan</span>
+          <div class="price">£___<small> / month</small></div>
+          <p style="color:var(--ink-2);font-size:0.92rem;">Keep your site fresh and looked after.</p>
+          <ul>
+            <li>Ongoing updates</li>
+            <li>Text &amp; photo changes</li>
+            <li>Hosting included</li>
+            <li>Priority support</li>
+          </ul>
+          <a class="btn btn-white" href="#contact">Enquire</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== ABOUT ===== -->
+  <section class="section">
+    <div class="wrap about-grid">
+      <div class="about-card reveal">
+        <div class="emoji">👋</div>
+        <h3>Nice to meet you</h3>
+        <p style="opacity:0.85;">I'm a Newcastle-based web designer who loves helping small businesses look the part online — without the agency price tag or the tech headache.</p>
+      </div>
+      <div class="about-text reveal">
+        <h2>Big-business polish, <span class="hl">small-business</span> friendly.</h2>
+        <p>Plenty of great local businesses are let down by a website that's slow, dated, or doesn't exist at all. I fix that — building sites that load fast, work on every phone, and actually bring in customers.</p>
+        <p>You deal with one person from start to finish. No call centres, no jargon, and no being left to figure out the tech on your own.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== CONTACT / CTA ===== -->
+  <section class="section cta" id="contact">
+    <div class="wrap cta-grid">
+      <div class="reveal">
+        <h2>Let's build something good.</h2>
+        <p class="lede">Tell me what you've got in mind and I'll come back with ideas and a price. No obligation, ever.</p>
+        <div class="cta-detail"><span class="ci"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 5h16v14H4z"/><path d="m4 7 8 6 8-6"/></svg></span> hello@corbettstudio.co.uk</div>
+        <div class="cta-detail"><span class="ci"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 21s7-6.4 7-11a7 7 0 0 0-14 0c0 4.6 7 11 7 11z"/><circle cx="12" cy="10" r="2.5"/></svg></span> Newcastle upon Tyne · working everywhere</div>
+      </div>
+      <div class="cform reveal">
+        <!-- To receive enquiries: make a free form at https://formspree.io and replace YOUR_FORM_ID below. -->
+        <form id="enquiryForm" action="https://formspree.io/f/YOUR_FORM_ID" method="POST">
+          <div class="frow">
+            <div><label for="name">Name</label><input type="text" id="name" name="name" required /></div>
+            <div><label for="email">Email</label><input type="email" id="email" name="email" required /></div>
+          </div>
+          <div>
+            <label for="ptype">What do you need?</label>
+            <select id="ptype" name="project_type">
+              <option>A brand-new website</option>
+              <option>A redesign of an existing site</option>
+              <option>Updates to my current site</option>
+              <option>Not sure yet — just exploring</option>
+            </select>
+          </div>
+          <div><label for="msg">Tell me about it</label><textarea id="msg" name="message" placeholder="What's your business, and what would you like the site to do?"></textarea></div>
+          <button type="submit" class="btn btn-ink">Send it over</button>
+          <div class="fstatus" id="fstatus" role="status" aria-live="polite"></div>
+        </form>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== FOOTER ===== -->
+  <footer>
+    <div class="wrap">
+      <div class="foot-top">
+        <div class="foot-brand">
+          <div class="logo"><span class="dot"></span>Corbett Studio</div>
+          <p>Bright, friendly websites for small businesses and new companies. Designed and built in Newcastle.</p>
+        </div>
+        <div class="foot-links">
+          <div class="foot-col">
+            <h5>Explore</h5>
+            <a href="#services">Services</a>
+            <a href="#work">Work</a>
+            <a href="#process">Process</a>
+            <a href="#pricing">Pricing</a>
+          </div>
+          <div class="foot-col">
+            <h5>Get in touch</h5>
+            <a href="mailto:hello@corbettstudio.co.uk">hello@corbettstudio.co.uk</a>
+            <a href="#contact">Start a project</a>
+          </div>
+        </div>
+      </div>
+      <div class="foot-bottom">
+        <span>&copy; <span id="year"></span> Corbett Studio. All rights reserved.</span>
+        <span>Designed &amp; built by me — yes, this site too.</span>
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    const toggle = document.getElementById('navToggle');
+    const links = document.getElementById('navLinks');
+    toggle.addEventListener('click', () => {
+      const open = links.classList.toggle('open');
+      toggle.setAttribute('aria-expanded', open);
+    });
+    links.querySelectorAll('a').forEach(a => a.addEventListener('click', () => {
+      links.classList.remove('open');
+      toggle.setAttribute('aria-expanded', 'false');
+    }));
+
+    const io = new IntersectionObserver((entries) => {
+      entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('in'); io.unobserve(e.target); } });
+    }, { threshold: 0.12 });
+    document.querySelectorAll('.reveal').forEach(el => io.observe(el));
+
+    document.getElementById('year').textContent = new Date().getFullYear();
+
+    const form = document.getElementById('enquiryForm');
+    const fstatus = document.getElementById('fstatus');
+    form.addEventListener('submit', (e) => {
+      if (form.action.includes('YOUR_FORM_ID')) {
+        e.preventDefault();
+        fstatus.textContent = 'Form not connected yet — add your Formspree ID to start getting enquiries.';
+      }
+    });
+  </script>
+</body>
+</html>
