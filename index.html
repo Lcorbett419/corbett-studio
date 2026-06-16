@@ -179,6 +179,11 @@
     }
     .case-media { background: #000; padding: 30px; display: flex; align-items: center; justify-content: center; min-height: 320px; }
     .case-logo { width: 100%; max-width: 300px; border-radius: 8px; }
+    .case-media.nations { background: linear-gradient(140deg, #07371f 0%, #0b6b4a 55%, #14c9a0 100%); flex-direction: column; gap: 8px; color: #fff; text-align: center; }
+    .case-media.nations .globe { font-size: 3.4rem; line-height: 1; }
+    .case-media.nations .nstat { font-family: var(--font-display); font-weight: 800; font-size: 3.2rem; line-height: 1; }
+    .case-media.nations .nstat span { color: rgba(255,255,255,0.55); font-size: 1.7rem; }
+    .case-media.nations .nlabel { font-family: var(--font-mono); font-size: 0.68rem; letter-spacing: 0.14em; text-transform: uppercase; opacity: 0.85; }
     .case-media .badge { font-family: var(--font-mono); font-size: 0.72rem; letter-spacing: 0.14em; text-transform: uppercase; color: #c8a24a; }
     .case-media .mock-name { font-family: 'Bricolage Grotesque', sans-serif; font-weight: 300; font-size: 2.4rem; letter-spacing: 0.18em; color: #f4f3ef; text-transform: uppercase; }
     .case-media .mock-sub { letter-spacing: 0.4em; font-size: 0.7rem; text-transform: uppercase; color: #c8a24a; border-block: 1px solid rgba(200,162,74,0.4); padding: 8px 0; text-align: center; }
@@ -363,7 +368,7 @@
       <div class="head reveal">
         <span class="eyebrow">Selected work</span>
         <h2>Recently launched.</h2>
-        <p>Real sites, live on the internet, doing a job for real businesses.</p>
+        <p>Real, live websites — designed, built and out there working in the world.</p>
       </div>
 
       <div class="case reveal">
@@ -380,7 +385,23 @@
         </div>
       </div>
 
-      <p class="work-note">More projects landing soon — your business could be the next one here.</p>
+      <div class="case reveal">
+        <div class="case-media nations">
+          <div class="globe">🌍</div>
+          <div class="nstat">31<span>/197</span></div>
+          <div class="nlabel">Nations · National shirts collected</div>
+        </div>
+        <div class="case-body">
+          <div class="tag-row">
+            <span class="tag">Interactive Map</span><span class="tag">Custom Build</span><span class="tag">Travel</span>
+          </div>
+          <h3>Luke's 197 Nations United</h3>
+          <p>A football shirt-collecting project built around a live, interactive world map — visited countries light up, and visitors can search, filter and sort all 197 nations. A data-driven site that's as fun to explore as it is to look at.</p>
+          <a class="btn btn-ink" href="https://lukes197nations.co.uk" target="_blank" rel="noopener">Visit live site <span class="btn-arrow"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M7 17 17 7M9 7h8v8"/></svg></span></a>
+        </div>
+      </div>
+
+      <p class="work-note">More projects on the way — yours could be next.</p>
     </div>
   </section>
 
